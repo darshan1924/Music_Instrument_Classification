@@ -6,7 +6,11 @@ from tensorflow.keras.preprocessing import image_dataset_from_directory  # Fallb
 
 @st.cache_resource
 def load_model():
-    model = tf.keras.models.load_model('final_instrument_model.h5', compile=False)
+    try:
+        model = tf.keras.models.load_model('final_instrument_model.h5', compile=False)
+    except TypeError:
+        model = tf.keras.models.load_model('final_instrument_model.h5')
+        model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
     classes = np.load('classes.npy', allow_pickle=True).tolist()
     return model, classes
 
@@ -45,3 +49,4 @@ if uploaded_file:
     st.success(f"**Instrument:** {instr}")
     st.success(f"**Confidence:** {conf:.1f}%")
     st.success(f"**Category:** {cat}")
+
