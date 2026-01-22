@@ -30,7 +30,7 @@ uploaded_file = st.file_uploader("Choose image...", type=['jpg', 'png', 'jpeg'])
 
 if uploaded_file:
     img = Image.open(uploaded_file)
-    st.image(img, caption="Uploaded", use_container_width=True)
+    st.image(img, caption="Uploaded", use_column_width=True)
     
     img = img.resize((224, 224))
     img_array = np.array(img) / 255.0
@@ -45,3 +45,4 @@ if uploaded_file:
     st.success(f"**Instrument:** {instr}")
     st.success(f"**Confidence:** {conf:.1f}%")
     st.success(f"**Category:** {cat}")
+
